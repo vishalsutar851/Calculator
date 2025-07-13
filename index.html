@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Calculator</title>
+	<link rel="stylesheet" href="./style.css">
+	<meta name="decribtion" content="A simple and lightweight calculator built using HTML, CSS, and JavaScript. It can perform basic arithmetic operations like addition, subtraction, multiplication, and division.">
+</head>
+<body class="w-[100dvw] h-[100dvh] bg-white transition-colors duration-300 overflow-hidden">
+	<div class="w-full h-[40%] p-4 flex justify-end items-center">
+		<div class="w-full text-5xl flex items-center justify-end">
+			<input id="input" type="text" disabled class="w-full text-end bg-white font-light"/>
+			<span class="h-10 w-[1px] border animate-blink border-blue-500"></span>
+		</div>
+	</div>
+	<div class="w-full h-[60%] grid grid-rows-5 grid-cols-4 border-r border-b">
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">C</button>
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">AC</button>
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">()</button>
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">/</button>
+		
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">7</button>
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">8</button>
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">9</button>
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">*</button>
+		
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">4</button>
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">5</button>
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">6</button>
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">-</button>
+		
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">1</button>
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">2</button>
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">3</button>
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">+</button>
+		
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">%</button>
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">0</button>
+		<button class="btn text-lg border-t border-l hover:transition-colors duration-300 md:hover:bg-blue-100 active:bg-blue-100">.</button>
+		<button class="btn text-lg border-t border-l bg-blue-500 text-white hover:transition-colors duration-300 md:hover:bg-blue-700 active:bg-blue-700">=</button>
+	</div>
+	
+	<script>
+		const input = document.getElementById("input");
+		const btns = Array.from(document.getElementsByClassName("btn"));
+		let isBracStart = false;
+		
+		function onBtnClick(t){
+			switch(t){
+				case '=':
+					try{
+						input.value = eval(input.value);	
+					}catch(error){
+						console.log(error)
+						alert(error.message)
+					}
+					break;
+				case 'Enter':
+					try{
+						input.value = eval(input.value);	
+					}catch(error){
+						console.log(error)
+						alert(error.message)
+					}
+					break;
+				case 'Delete':
+					input.value = '';
+					break;
+				case '()':
+					if(isBracStart){
+						input.value += ')';
+						isBracStart = false;
+					}else{
+						input.value += '(';
+						isBracStart = true;
+					}
+					break;
+				case 'C':
+					input.value = input.value.slice(0,-1);
+					break;
+				case 'AC':
+					input.value = '';
+					break;
+				default:
+					input.value += t;
+			}
+		}
+		
+		for(const btn of btns){
+			btn.addEventListener("click",(e)=>{
+				onBtnClick(e.target.textContent);
+			});
+		}
+		document.addEventListener("keydown",(e)=>{
+			if(e.location == 3){
+				onBtnClick(e.key);
+			}
+		});
+	</script>
+</body>
+</html>
